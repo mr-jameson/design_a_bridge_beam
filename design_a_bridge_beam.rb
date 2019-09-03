@@ -4,8 +4,16 @@
 
 #---------------------------------------------------
 
+require "cle"
+
 #Initial greeting
 puts "Hello Mr. Engineer."
+
+#Add delay for better UI
+sleep(1)
+
+#clear screen
+system("clear")
 
 #Get span input from user
 puts "What is the span of your bridge?"
@@ -18,7 +26,14 @@ while span == 0
     span = gets.chomp.to_i
 end 
 
+#Add delay for better UI
+sleep(1)
+
+#clear screen
+system("clear")
+
 puts "span = #{span} m"
+
 
 #Get load type input from user. The user selects the load type from a pre-determined list/array
 puts "What kind of load will the bridge carry?"
