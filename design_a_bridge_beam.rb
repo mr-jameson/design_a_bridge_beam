@@ -98,7 +98,10 @@ end
 #hash of beam properties: [XS area(m^2), zy (m^3)]
 beam = {
     "610-UB-125": [0.016, 3.23e-3],
-    "530-UB-92.4": [0.0118, 2.08e-3]
+    "530-UB-92.4": [0.0118, 2.08e-3],
+    "460-UB-82.1": [0.0105, 1.61e-3],
+    "410-UB-59.1": [0.00764, 1.06e-3],
+    "360-UB-56.7": [0.00724, 0.899e-3]
 }
 
 # #Add delay for better UI
@@ -128,3 +131,12 @@ system("clear")
 
 parameters.push "beam_size = #{beam_size}"
 puts parameters
+
+#Define method for outputing bending capacity of beam in kNm
+def bending_capacity(yield_str, modulus)
+    #Set steel yield strength to 300MPa
+    yield_str = 300
+    #modulus = 
+    yield_str * 1e6 * modulus / 1000
+end
+
