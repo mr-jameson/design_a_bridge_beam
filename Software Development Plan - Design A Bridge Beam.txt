@@ -28,17 +28,4 @@ This is built for structural engineers select an initial beam size for their sim
 
 3. Design mode or verify mode?
 
-## Control Flow Diagram
-
-## Implementation Plan
-
-- clearing the screen
-- incorporating a delay
-- gem?
-- text output speed
-
-
-
-
-
 
