@@ -2,7 +2,7 @@
 
 ## Statement of Purpose and Scope
 
-This terminal application calculates the adequacy of a structural bridge beam. It takes user inputs for span length and applied load, and returns the size of the required beam.
+This terminal application calculates the adequacy of a structural bridge beam. It takes user inputs for span length, load type, beam size and returns an assessment of whether or not the beam is adequate. If the beam is not adequate, the user is presented with options to change the span or to change the beam size.
 
 This is built for structural engineers select an initial beam size for their simply supported bridge design.
 
@@ -10,9 +10,9 @@ This is built for structural engineers select an initial beam size for their sim
 
 ### Features
 
-- Show handcalc
+- Include self-weight?
 
-- Print handcalc to file
+- Adjust span length
 
 - Include deflection calc?
 

@@ -261,9 +261,9 @@ def get_load_type(parameters)
     else loading == "rail"
         dist_load = 25
     end
-    return load_type
+    return dist_load
 end
 
-loading = get_load_type(parameters)
+dist_load = get_load_type(parameters)
 
 puts parameters 

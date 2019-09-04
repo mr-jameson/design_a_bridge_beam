@@ -57,12 +57,6 @@ puts "\nWhat kind of load will the bridge carry?"
 load_type = ["pedestrian", "road", "rail"]
 
 puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
-# for load in load_type
-#     if load_type.find_index(load) == load_type.length - 1
-#     puts "or #{load}?"
-#     else puts "#{load},"
-#     end
-# end
 
 loading = gets.chomp
 
