@@ -39,7 +39,7 @@ sleep(1)
 #clear screen
 system("clear")
 
-parameters.push "span = #{span} m"
+parameters.push "span = #{span}"
 puts parameters
 puts "\n"
 
@@ -116,7 +116,13 @@ def get_beam_size(beam_keys, parameters)
         puts "Please enter a beam specification from the list above."
         beam_size = gets.chomp.to_sym
     end 
-parameters.insert (2, "beam_size = #{beam_size}")
+
+    if parameters.to_s.include? "beam_size"
+        parameters.delete_at(2)
+        parameters.insert(2,"beam_size = #{beam_size}")
+    else
+        parameters.push "beam_size = #{beam_size}"
+    end
 return beam_size
 end
 beam_size = get_beam_size(beam_keys, parameters)
@@ -150,12 +156,6 @@ system("clear")
 parameters.push "inc_self_weight = #{inc_self_weight}"
 puts parameters
 
-#Add delay for better UI
-sleep(1)
-
-#clear screen
-system("clear")
-
 steel_density = 78
 
 if inc_self_weight == "yes"
@@ -176,6 +176,8 @@ yield_str = 300
 modulus = beam[beam_size][1]
 
 def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters)
+    if bending_capacity(yield_str, modulus) > bending_action(dist_load, span)
+        puts "The #{beam_size} beam is adequate. Your #{span} m span bridge can safely carry the #{load_type} load."
     while bending_capacity(yield_str, modulus) <= bending_action(dist_load, span)
         system("clear")
         puts parameters
