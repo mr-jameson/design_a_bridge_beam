@@ -192,7 +192,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
         while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
             system("clear")
             puts parameters
-            puts "\n The #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?"
+            puts "\nThe #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?"
             sleep (1)
             puts "\n 1. Update the beam size
             \n 2. Update the span
@@ -220,6 +220,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
                 end
             end
          end
+         system("clear")
          puts parameters
          puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the #{loading} load."
     end
