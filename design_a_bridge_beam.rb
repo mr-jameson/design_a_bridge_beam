@@ -120,6 +120,7 @@ puts "Choose a beam size for your bridge:"
 
 def get_beam_size(beam_keys, parameters)
     puts beam_keys
+    puts "\n"
     beam_size = gets.chomp.to_sym
 #Make sure user enters a value from the beam array
     until beam_keys.include? beam_size

@@ -92,11 +92,11 @@
 
 # puts bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters)
 
-parameters = [
-    "span = 5 m",
-    "beam_size = 600",
-    "load = rail"
-]
+# parameters = [
+#     "span = 5 m",
+#     "beam_size = 600",
+#     "load = rail"
+# ]
 
     
 
@@ -158,25 +158,112 @@ parameters = [
 # span = get_span(parameters)
 
 #Get span input from user
-parameters = ["span = 1"]
-puts "\nWhat is the span of your bridge in meters?"
+# parameters = ["span = 1"]
+# puts "\nWhat is the span of your bridge in meters?"
 
-def get_span(parameters)
-    span = gets.chomp.to_f
-        #Make sure user enters a float or an integer, not a string or an array
-        while span == 0
-            puts "Please input an integer or a float."
-            span = gets.chomp.to_f
-        end 
+# def get_span(parameters)
+#     span = gets.chomp.to_f
+#         #Make sure user enters a float or an integer, not a string or an array
+#         while span == 0
+#             puts "Please input an integer or a float."
+#             span = gets.chomp.to_f
+#         end 
 
-        if parameters.to_s.include? "span"
-            parameters.delete_at(0)
-            parameters.unshift "span = #{span}"
-        else
-            parameters.push "span = #{span}"
-        end
-        return span
-end
+#         if parameters.to_s.include? "span"
+#             parameters.delete_at(0)
+#             parameters.unshift "span = #{span} m"
+#         else
+#             parameters.push "span = #{span} m"
+#         end
+#         return span
+# end
     
-p span = get_span(parameters)
-puts parameters
+# span = get_span(parameters)
+
+# puts parameters
+
+
+#Get load type input from user. The user selects the load type from a pre-determined list/array
+# puts parameters
+# puts "\nWhat kind of load will the bridge carry?"
+
+# load_type = ["pedestrian", "road", "rail"]
+
+# puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
+# # for load in load_type
+# #     if load_type.find_index(load) == load_type.length - 1
+# #     puts "or #{load}?"
+# #     else puts "#{load},"
+# #     end
+# # end
+
+# loading = gets.chomp
+
+# #Make sure user enters a value from the load_type array
+# loading = loading.downcase
+# until load_type.include? loading
+#     puts "Please enter a load type from the list above."
+#     loading = gets.chomp
+#     loading = loading.downcase
+# end 
+
+
+# # #Add delay for better UI
+# sleep(1)
+
+# # #clear screen
+# system("clear")
+
+# parameters.push "load_type = #{loading}"
+# puts parameters
+# puts "\n"
+
+# # Assign distributed load value in kN/m to load type
+# if loading == "pedestrian"
+#     dist_load = 5
+# elsif loading == "road"
+#     dist_load = 20
+# else loading == "rail"
+#     dist_load = 25
+# end
+
+
+parameters = []
+
+puts "\nWhat kind of load will the bridge carry?"
+
+def get_load_type(parameters)
+    load_type = ["pedestrian", "road", "rail"]
+        puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
+
+    loading = gets.chomp
+    #Make sure user enters a value from the load_type array
+    loading = loading.downcase
+
+    until load_type.include? loading
+        puts "Please enter a load type from the list above."
+        loading = gets.chomp
+        loading = loading.downcase
+    end 
+
+    if parameters.to_s.include? "load_type"
+        parameters.delete_at(1)
+        parameters.insert(1,"load_type = #{loading}")
+    else
+        parameters.push "load_type = #{loading}"
+    end
+
+    # Assign distributed load value in kN/m to load type
+    if loading == "pedestrian"
+        dist_load = 5
+    elsif loading == "road"
+        dist_load = 20
+    else loading == "rail"
+        dist_load = 25
+    end
+    return load_type
+end
+
+loading = get_load_type(parameters)
+
+puts parameters 
