@@ -52,41 +52,51 @@ system("clear")
 
 #Get load type input from user. The user selects the load type from a pre-determined list/array
 puts parameters
+
+#Add delay for better UI
+sleep(1)
+
 puts "\nWhat kind of load will the bridge carry?"
 
-load_type = ["pedestrian", "road", "rail"]
+def get_load_type(parameters)
+    load_type = ["pedestrian", "road", "rail"]
+        puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
 
-puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
-
-loading = gets.chomp
-
-#Make sure user enters a value from the load_type array
-loading = loading.downcase
-until load_type.include? loading
-    puts "Please enter a load type from the list above."
     loading = gets.chomp
+    #Make sure user enters a value from the load_type array
     loading = loading.downcase
-end 
 
+    until load_type.include? loading
+        puts "Please enter a load type from the list above."
+        loading = gets.chomp
+        loading = loading.downcase
+    end 
+
+    if parameters.to_s.include? "load_type"
+        parameters.delete_at(1)
+        parameters.insert(1,"load_type = #{loading}")
+    else
+        parameters.push "load_type = #{loading}"
+    end
+
+    # Assign distributed load value in kN/m to load type
+    if loading == "pedestrian"
+        dist_load = 5
+    elsif loading == "road"
+        dist_load = 20
+    else loading == "rail"
+        dist_load = 25
+    end
+    return dist_load
+end
+
+dist_load = get_load_type(parameters)
 
 # #Add delay for better UI
 sleep(1)
 
 # #clear screen
 system("clear")
-
-parameters.push "load_type = #{loading}"
-puts parameters
-puts "\n"
-
-# Assign distributed load value in kN/m to load type
-if loading == "pedestrian"
-    dist_load = 5
-elsif loading == "road"
-    dist_load = 20
-else loading == "rail"
-    dist_load = 25
-end
 
 #-----------------------------------------------------------------------------------------------------------
 #Method for calculating max sagging bending moment in kNm
@@ -107,7 +117,12 @@ beam = {
 }
 
 beam_keys = beam.keys
-puts "Choose a beam size for your bridge:"
+puts parameters
+
+#Add delay for better UI
+sleep(1)
+
+puts "\nChoose a beam size for your bridge:"
 
 #--------------------------------------------------------------------------------------------------
 # Define a method to get the user to input the beam size.
@@ -182,13 +197,12 @@ yield_str = 300
 
 def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, loading)
     if bending_capacity(yield_str, beam_size, beam) > bending_action(dist_load, span)
-        puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the #{loading} load."
+        puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load."
     else
         while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
             system("clear")
             puts parameters
             puts "\nThe #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?"
-            sleep (1)
             puts "\n 1. Update the beam size
             \n 2. Update the span
             \n 3. Update the load \n"
@@ -206,7 +220,10 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
                 span = get_span(parameters)
             
             elsif rev_input_1 == 3
-                puts "Implement reduce_load method"
+                system("clear")
+                puts parameters
+                puts "\nWhat do you want to update the span to?"
+                dist_load = get_load_type(parameters)
             break
             else
                 until rev_input_1 == 1 or rev_input_1 == 2 or rev_input_1 == 3
@@ -217,8 +234,12 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
          end
          system("clear")
          puts parameters
-         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the #{loading} load."
+
+         #Add delay for better UI
+         sleep(1)
+
+         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load."
     end
 end
 
-puts bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, loading)
+puts bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, dist_load)
