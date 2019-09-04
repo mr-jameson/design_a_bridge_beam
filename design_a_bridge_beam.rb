@@ -176,48 +176,53 @@ end
 #-------------------------------------------------------------------------------------------------
 
 #Define method for outputing bending capacity of beam in kNm
-def bending_capacity(yield_str, modulus)
-    yield_str * 1e6 * modulus / 1000
+def bending_capacity(yield_str, beam_size, beam)
+    yield_str * 1e6 * beam[beam_size][1] / 1000
 end
 
 #Set steel yield strength to 300MPa
 yield_str = 300
 #reference modulus from beams array
-modulus = beam[beam_size][1]
+# modulus = beam[beam_size][1]
 
-def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters, loading)
-    if bending_capacity(yield_str, modulus) > bending_action(dist_load, span)
+def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, loading)
+    if bending_capacity(yield_str, beam_size, beam) > bending_action(dist_load, span)
         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the #{loading} load."
     else
-    while bending_capacity(yield_str, modulus) <= bending_action(dist_load, span)
-        system("clear")
-        puts parameters
-        puts "\n This beam is not strong enough. Please select a larger beam, reduce your span, or reduce your load. What would you like to do?"
-        sleep (1)
-        puts "\n 1. Select a larger beam
-        \n 2. Reduce span
-        \n 3. Reduce load \n"
-        rev_input_1 = gets.chomp.to_i
-        if rev_input_1 == 1
-            puts "What size beam do you want to update to?"
-            beam_size = get_beam_size(beam_keys, parameters)
+        while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
+            system("clear")
             puts parameters
-        elsif rev_input_1 == 2
-            puts "What do you want to update the span to?"
-            get_span(parameters)
-            puts parameters
-            next
-        elsif rev_input_1 == 3
-            break
-            puts "Implement reduce_load method"
-        else
-            until rev_input_1 == 1 or rev_input_1 == 2 or rev_input_1 == 3
-            puts "Please enter a number from the listed options above."
+            puts "\n The #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?"
+            sleep (1)
+            puts "\n 1. Update the beam size
+            \n 2. Update the span
+            \n 3. Update the load \n"
             rev_input_1 = gets.chomp.to_i
+            if rev_input_1 == 1
+                system("clear")
+                puts parameters
+                puts "\nWhat size beam do you want to update to?"
+                beam_size = get_beam_size(beam_keys, parameters)
+
+            elsif rev_input_1 == 2
+                system("clear")
+                puts parameters
+                puts "\nWhat do you want to update the span to?"
+                span = get_span(parameters)
+            
+            elsif rev_input_1 == 3
+                puts "Implement reduce_load method"
+            break
+            else
+                until rev_input_1 == 1 or rev_input_1 == 2 or rev_input_1 == 3
+                puts "Please enter a number from the listed options above."
+                rev_input_1 = gets.chomp.to_i
+                end
             end
-        end
+         end
+         puts parameters
+         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the #{loading} load."
     end
 end
-end
 
-puts bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters, loading)
+puts bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, loading)
