@@ -11,13 +11,13 @@ parameters = []
 system("clear")
 
 #Add delay for better UI
-sleep(2)
+sleep(1)
 
 #Initial greeting
 puts "Hello Mr. Engineer."
 
 #Add delay for better UI
-sleep(1)
+sleep(2)
 
 #clear screen
 system("clear")
@@ -123,20 +123,69 @@ until beam_keys.include? beam_size
     beam_size = gets.chomp.to_sym
 end 
 
-# #Add delay for better UI
+#Add delay for better UI
 sleep(1)
 
-# #clear screen
+#Clear screen
 system("clear")
 
 parameters.push "beam_size = #{beam_size}"
 puts parameters
 
+#Add delay for better UI
+sleep(1)
+
+#clear screen
+system("clear")
+
+#-----------------------------------------------------------------------------------------------
+
+puts "Include self-weight of beam in calculation? Yes or No."
+inc_self_weight = gets.chomp
+
+#Make sure user enters a yes or no value
+inc_self_weight = inc_self_weight.downcase
+until inc_self_weight == "yes" or inc_self_weight == "no"
+    puts "Please answer yes or no."
+    inc_self_weight = gets.chomp
+    inc_self_weight = inc_self_weight.downcase
+end 
+
+#Add delay for better UI
+sleep(1)
+
+#Clear screen
+system("clear")
+
+parameters.push "inc_self_weight = #{inc_self_weight}"
+puts parameters
+
+#Add delay for better UI
+sleep(1)
+
+#clear screen
+system("clear")
+
+#-------------------------------------------------------------------------------------------------
+
 #Define method for outputing bending capacity of beam in kNm
 def bending_capacity(yield_str, modulus)
-    #Set steel yield strength to 300MPa
-    yield_str = 300
-    #modulus = 
     yield_str * 1e6 * modulus / 1000
 end
 
+#Set steel yield strength to 300MPa
+yield_str = 300
+#reference modulus from beams array
+modulus = beam[beam_size][1]
+
+def bending_check(beam, beam_size, yield_str, modulus, dist_load, span)
+    if bending_capacity(yield_str, modulus) >= bending_action(dist_load, span)
+        puts "\n Beam size is adequate in bending."
+    else 
+        puts "\n This beam is not strong enough. Please select a larger beam, reduce your span, or reduce your load."
+    end
+end
+
+puts parameters
+
+puts bending_check(beam, beam_size, yield_str, modulus, dist_load, span)
