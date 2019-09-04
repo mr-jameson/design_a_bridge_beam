@@ -100,14 +100,59 @@ parameters = [
 
     
 
-# initial_beam_size = parameters.grep(/beam_size/)
+# # initial_beam_size = parameters.grep(/beam_size/)
 
-if parameters.to_s.include? "beam_size"
-    parameters.delete_at(1)
-    parameters.insert(1,"beam_size = 700")
-else
-    parameters.push "beam size = 700"
+# if parameters.to_s.include? "beam_size"
+#     parameters.delete_at(1)
+#     parameters.insert(1,"beam_size = 700")
+# else
+#     parameters.push "beam size = 700"
+# end
+
+# p parameters
+# # p initial_beam_size
+
+# #----------------------------------------------------------------------------------------------------------
+
+# #Get span input from user
+# puts "What is the span of your bridge in meters?"
+
+# span = gets.chomp.to_f
+
+# #Make sure user enters a float or an integer, not a string or an array
+# while span == 0
+#     puts "Please input an integer or a float."
+#     span = gets.chomp.to_f
+# end 
+
+# #Add delay for better UI
+# sleep(1)
+
+# #clear screen
+# system("clear")
+
+# parameters.push "span = #{span} m"
+# puts parameters
+# puts "\n"
+
+# #----------------------------------------------------------------------------------------------------------
+parameters = []
+
+puts "What is the span of your bridge in meters?"
+
+def get_span(parameters)
+span = gets.chomp.to_f
+
+#Make sure user enters a float or an integer, not a string or an array
+    while span == 0
+        puts "Please input an integer or a float."
+        span = gets.chomp.to_f
+    end 
+
+    parameters.push "span = #{span} m"
+    puts parameters
+    puts "\n"
+    return span
 end
 
-p parameters
-# p initial_beam_size
+span = get_span(parameters)

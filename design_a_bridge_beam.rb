@@ -19,34 +19,36 @@ puts "Hello Mr. Engineer."
 #Add delay for better UI
 sleep(2)
 
-#clear screen
-system("clear")
+#----------------------------------------------------------------------------------------------------------
 
 #Get span input from user
-puts "What is the span of your bridge in meters?"
+puts "\nWhat is the span of your bridge in meters?"
 
-span = gets.chomp.to_f
-
-#Make sure user enters a float or an integer, not a string or an array
-while span == 0
-    puts "Please input an integer or a float."
+def get_span(parameters)
     span = gets.chomp.to_f
-end 
-
+        #Make sure user enters a float or an integer, not a string or an array
+        while span == 0
+            puts "Please input an integer or a float."
+            span = gets.chomp.to_f
+        end 
+        parameters.push "span = #{span} m"
+        return span
+end
+    
+span = get_span(parameters)
 #Add delay for better UI
 sleep(1)
 
 #clear screen
 system("clear")
 
-parameters.push "span = #{span} m"
-puts parameters
-puts "\n"
+#----------------------------------------------------------------------------------------------------------
 
 #Get load type input from user. The user selects the load type from a pre-determined list/array
-puts "What kind of load will the bridge carry?"
+puts parameters
+puts "\nWhat kind of load will the bridge carry?"
 
-load_type = ["pedestrian", "truck", "rail"]
+load_type = ["pedestrian", "road", "rail"]
 
 puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
 # for load in load_type
@@ -80,7 +82,7 @@ puts "\n"
 # Assign distributed load value in kN/m to load type
 if loading == "pedestrian"
     dist_load = 5
-elsif loading == "truck"
+elsif loading == "road"
     dist_load = 20
 else loading == "rail"
     dist_load = 25
@@ -105,9 +107,11 @@ beam = {
 }
 
 beam_keys = beam.keys
-puts "What size beam do you want to use?"
+puts "Choose a beam size for your bridge:"
 
 #--------------------------------------------------------------------------------------------------
+# Define a method to get the user to input the beam size.
+
 def get_beam_size(beam_keys, parameters)
     puts beam_keys
     beam_size = gets.chomp.to_sym
@@ -189,12 +193,15 @@ def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_key
         \n 3. Reduce load \n"
         rev_input_1 = gets.chomp.to_i
         if rev_input_1 == 1
-            puts "What size beam do you want to use?"
+            puts "What size beam do you want to update to?"
             beam_size = get_beam_size(beam_keys, parameters)
             puts parameters
         elsif rev_input_1 == 2
-            puts "Implement reduce_span method"
+            puts "What do you want to update the span to?"
+            get_span(parameters)
+            break
         elsif rev_input_1 == 3
+            break
             puts "Implement reduce_load method"
         else
             until rev_input_1 == 1 or rev_input_1 == 2 or rev_input_1 == 3
