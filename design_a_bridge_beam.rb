@@ -86,14 +86,14 @@ else loading == "rail"
     dist_load = 25
 end
 
-#--------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------
 #Method for calculating max sagging bending moment in kNm
 
 def bending_action(dist_load, span)
     (dist_load * span ** 2) / 8
 end
 
-#---------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------
 
 #hash of beam properties: [XS area(m^2), zy (m^3)]
 beam = {
@@ -104,33 +104,22 @@ beam = {
     "360-UB-56.7": [0.00724, 0.899e-3]
 }
 
-# #Add delay for better UI
-sleep(1)
-
-# #clear screen
-system("clear")
-
-puts "What size beam do you want to use?"
-
 beam_keys = beam.keys
-puts beam_keys
 
-beam_size = gets.chomp.to_sym
-
-#Make sure user enters a value from the beam array
-until beam_keys.include? beam_size
-    puts "Please enter a beam specification from the list above."
+#--------------------------------------------------------------------------------------------------
+def get_beam_size(beam_keys, parameters)
+    puts "What size beam do you want to use?"
+    puts beam_keys
     beam_size = gets.chomp.to_sym
-end 
-
-#Add delay for better UI
-sleep(1)
-
-#Clear screen
-system("clear")
-
+#Make sure user enters a value from the beam array
+    until beam_keys.include? beam_size
+        puts "Please enter a beam specification from the list above."
+        beam_size = gets.chomp.to_sym
+    end 
 parameters.push "beam_size = #{beam_size}"
-puts parameters
+return beam_size
+end
+beam_size = get_beam_size(beam_keys, parameters)
 
 #Add delay for better UI
 sleep(1)
@@ -139,6 +128,7 @@ sleep(1)
 system("clear")
 
 #-----------------------------------------------------------------------------------------------
+puts parameters
 
 puts "Include self-weight of beam in calculation? Yes or No."
 inc_self_weight = gets.chomp
@@ -166,6 +156,13 @@ sleep(1)
 #clear screen
 system("clear")
 
+steel_density = 78
+
+if inc_self_weight == "yes"
+    dist_load = dist_load + (beam[beam_size][0] * steel_density)
+else
+    dist_load = dist_load
+end
 #-------------------------------------------------------------------------------------------------
 
 #Define method for outputing bending capacity of beam in kNm
@@ -178,14 +175,29 @@ yield_str = 300
 #reference modulus from beams array
 modulus = beam[beam_size][1]
 
-def bending_check(beam, beam_size, yield_str, modulus, dist_load, span)
+def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters)
     if bending_capacity(yield_str, modulus) >= bending_action(dist_load, span)
         puts "\n Beam size is adequate in bending."
     else 
-        puts "\n This beam is not strong enough. Please select a larger beam, reduce your span, or reduce your load."
+        puts "\n This beam is not strong enough. Please select a larger beam, reduce your span, or reduce your load. What would you like to do?"
+        sleep (1)
+        puts "\n 1. Select a larger beam
+        \n 2. Reduce span
+        \n 3. Reduce load \n"
+        rev_input_1 = gets.chomp.to_i
+        if rev_input_1 == 1
+            system("clear")
+            beam_size = get_beam_size(beam_keys, parameters)
+        elsif rev_input_1 == 2
+            puts "Implement reduce_span method"
+        elsif rev_input_1 == 3
+            puts "Implement reduce_load method"
+        else
+            puts "Please enter a number from the listed options above."
+        end
     end
 end
 
 puts parameters
 
-puts bending_check(beam, beam_size, yield_str, modulus, dist_load, span)
+puts bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters)
