@@ -105,10 +105,10 @@ beam = {
 }
 
 beam_keys = beam.keys
+puts "What size beam do you want to use?"
 
 #--------------------------------------------------------------------------------------------------
 def get_beam_size(beam_keys, parameters)
-    puts "What size beam do you want to use?"
     puts beam_keys
     beam_size = gets.chomp.to_sym
 #Make sure user enters a value from the beam array
@@ -116,7 +116,7 @@ def get_beam_size(beam_keys, parameters)
         puts "Please enter a beam specification from the list above."
         beam_size = gets.chomp.to_sym
     end 
-parameters.push "beam_size = #{beam_size}"
+parameters.insert (2, "beam_size = #{beam_size}")
 return beam_size
 end
 beam_size = get_beam_size(beam_keys, parameters)
@@ -130,7 +130,7 @@ system("clear")
 #-----------------------------------------------------------------------------------------------
 puts parameters
 
-puts "Include self-weight of beam in calculation? Yes or No."
+puts "\nInclude self-weight of beam in calculation? Yes or No."
 inc_self_weight = gets.chomp
 
 #Make sure user enters a yes or no value
@@ -176,9 +176,9 @@ yield_str = 300
 modulus = beam[beam_size][1]
 
 def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters)
-    if bending_capacity(yield_str, modulus) >= bending_action(dist_load, span)
-        puts "\n Beam size is adequate in bending."
-    else 
+    while bending_capacity(yield_str, modulus) <= bending_action(dist_load, span)
+        system("clear")
+        puts parameters
         puts "\n This beam is not strong enough. Please select a larger beam, reduce your span, or reduce your load. What would you like to do?"
         sleep (1)
         puts "\n 1. Select a larger beam
@@ -186,18 +186,20 @@ def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_key
         \n 3. Reduce load \n"
         rev_input_1 = gets.chomp.to_i
         if rev_input_1 == 1
-            system("clear")
+            puts "What size beam do you want to use?"
             beam_size = get_beam_size(beam_keys, parameters)
+            puts parameters
         elsif rev_input_1 == 2
             puts "Implement reduce_span method"
         elsif rev_input_1 == 3
             puts "Implement reduce_load method"
         else
+            until rev_input_1 == 1 or rev_input_1 == 2 or rev_input_1 == 3
             puts "Please enter a number from the listed options above."
+            rev_input_1 = gets.chomp.to_i
+            end
         end
     end
 end
-
-puts parameters
 
 puts bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters)
