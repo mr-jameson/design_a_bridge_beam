@@ -39,7 +39,7 @@ sleep(1)
 #clear screen
 system("clear")
 
-parameters.push "span = #{span}"
+parameters.push "span = #{span} m"
 puts parameters
 puts "\n"
 
@@ -175,9 +175,10 @@ yield_str = 300
 #reference modulus from beams array
 modulus = beam[beam_size][1]
 
-def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters)
+def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters, loading)
     if bending_capacity(yield_str, modulus) > bending_action(dist_load, span)
-        puts "The #{beam_size} beam is adequate. Your #{span} m span bridge can safely carry the #{load_type} load."
+        puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the #{loading} load."
+    else
     while bending_capacity(yield_str, modulus) <= bending_action(dist_load, span)
         system("clear")
         puts parameters
@@ -203,5 +204,6 @@ def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_key
         end
     end
 end
+end
 
-puts bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters)
+puts bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_keys, parameters, loading)
