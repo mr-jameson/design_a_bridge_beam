@@ -31,7 +31,13 @@ def get_span(parameters)
             puts "Please input an integer or a float."
             span = gets.chomp.to_f
         end 
-        parameters.push "span = #{span} m"
+
+        if parameters.to_s.include? "span"
+            parameters.delete_at(0)
+            parameters.unshift "span = #{span} m"
+        else
+            parameters.push "span = #{span} m"
+        end
         return span
 end
     
@@ -199,7 +205,8 @@ def bending_check(beam, beam_size, yield_str, modulus, dist_load, span, beam_key
         elsif rev_input_1 == 2
             puts "What do you want to update the span to?"
             get_span(parameters)
-            break
+            puts parameters
+            next
         elsif rev_input_1 == 3
             break
             puts "Implement reduce_load method"

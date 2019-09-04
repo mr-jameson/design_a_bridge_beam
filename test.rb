@@ -136,23 +136,47 @@ parameters = [
 # puts "\n"
 
 # #----------------------------------------------------------------------------------------------------------
-parameters = []
+# parameters = []
 
-puts "What is the span of your bridge in meters?"
+# puts "What is the span of your bridge in meters?"
+
+# def get_span(parameters)
+# span = gets.chomp.to_f
+
+# #Make sure user enters a float or an integer, not a string or an array
+#     while span == 0
+#         puts "Please input an integer or a float."
+#         span = gets.chomp.to_f
+#     end 
+
+#     parameters.push "span = #{span} m"
+#     puts parameters
+#     puts "\n"
+#     return span
+# end
+
+# span = get_span(parameters)
+
+#Get span input from user
+parameters = ["span = 1"]
+puts "\nWhat is the span of your bridge in meters?"
 
 def get_span(parameters)
-span = gets.chomp.to_f
+    span = gets.chomp.to_f
+        #Make sure user enters a float or an integer, not a string or an array
+        while span == 0
+            puts "Please input an integer or a float."
+            span = gets.chomp.to_f
+        end 
 
-#Make sure user enters a float or an integer, not a string or an array
-    while span == 0
-        puts "Please input an integer or a float."
-        span = gets.chomp.to_f
-    end 
-
-    parameters.push "span = #{span} m"
-    puts parameters
-    puts "\n"
-    return span
+        if parameters.to_s.include? "span"
+            parameters.delete_at(0)
+            parameters.unshift "span = #{span}"
+        else
+            parameters.push "span = #{span}"
+        end
+        return span
 end
-
-span = get_span(parameters)
+    
+p span = get_span(parameters)
+puts parameters
