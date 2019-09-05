@@ -246,7 +246,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             sleep(1)
             a = Artii::Base.new 
             puts a.asciify('GOOD   JOB!')
-            break
+            exit
         end
     end
         while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
@@ -255,7 +255,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             puts "\nThe #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?".colorize(:light_red)
             puts "\n 1. Update the beam size
             \n 2. Update the span
-            \n 3. Update the load \n
+            \n 3. Update the load
             \nEnter a number from the options above.\n"
             rev_input_1 = gets.chomp.to_i
             if rev_input_1 == 1
@@ -303,6 +303,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             system("clear")
     
             if optimise == "yes"
+                puts parameters
                 puts "\nChoose a new " + Crayon.underline("beam size") + " for your bridge:"
                 beam_size = get_beam_size(beam_keys, parameters)
     
