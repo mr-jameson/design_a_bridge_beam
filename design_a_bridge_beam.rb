@@ -124,7 +124,9 @@ beam = {
     "530-UB-92.4": [0.0118, 2.08e-3],
     "460-UB-82.1": [0.0105, 1.61e-3],
     "410-UB-59.1": [0.00764, 1.06e-3],
-    "360-UB-56.7": [0.00724, 0.899e-3]
+    "360-UB-56.7": [0.00724, 0.899e-3],
+    "310-UB-46.2": [0.00593, 0.654e-3],
+    "250-UB-37.3": [0.00475, 0.435e-3]
 }
 
 beam_keys = beam.keys
@@ -210,9 +212,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
     while bending_capacity(yield_str, beam_size, beam) > bending_action(dist_load, span)
         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
         #Add delay for better UI
-        sleep(1)
-        a = Artii::Base.new 
-         puts a.asciify('GOOD   JOB!')
+        
          sleep (1)
 
          puts "Do you want to try a lighter beam? Yes or no."
@@ -243,6 +243,9 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             puts "No problem. Here is a summary of your bridge design:\n\n"
             puts parameters
             puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+            sleep(1)
+            a = Artii::Base.new 
+            puts a.asciify('GOOD   JOB!')
             break
         end
     end
