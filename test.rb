@@ -228,42 +228,55 @@
 # end
 
 
-parameters = []
+# parameters = []
 
-puts "\nWhat kind of load will the bridge carry?"
+# puts "\nWhat kind of load will the bridge carry?"
 
-def get_load_type(parameters)
-    load_type = ["pedestrian", "road", "rail"]
-        puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
+# def get_load_type(parameters)
+#     load_type = ["pedestrian", "road", "rail"]
+#         puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
 
-    loading = gets.chomp
-    #Make sure user enters a value from the load_type array
-    loading = loading.downcase
+#     loading = gets.chomp
+#     #Make sure user enters a value from the load_type array
+#     loading = loading.downcase
 
-    until load_type.include? loading
-        puts "Please enter a load type from the list above."
-        loading = gets.chomp
-        loading = loading.downcase
-    end 
+#     until load_type.include? loading
+#         puts "Please enter a load type from the list above."
+#         loading = gets.chomp
+#         loading = loading.downcase
+#     end 
 
-    if parameters.to_s.include? "load_type"
-        parameters.delete_at(1)
-        parameters.insert(1,"load_type = #{loading}")
-    else
-        parameters.push "load_type = #{loading}"
-    end
+#     if parameters.to_s.include? "load_type"
+#         parameters.delete_at(1)
+#         parameters.insert(1,"load_type = #{loading}")
+#     else
+#         parameters.push "load_type = #{loading}"
+#     end
 
-    # Assign distributed load value in kN/m to load type
-    if loading == "pedestrian"
-        dist_load = 5
-    elsif loading == "road"
-        dist_load = 20
-    else loading == "rail"
-        dist_load = 25
-    end
-    return dist_load
-end
+#     # Assign distributed load value in kN/m to load type
+#     if loading == "pedestrian"
+#         dist_load = 5
+#     elsif loading == "road"
+#         dist_load = 20
+#     else loading == "rail"
+#         dist_load = 25
+#     end
+#     return dist_load
+# end
 
-dist_load = get_load_type(parameters)
+# dist_load = get_load_type(parameters)
 
-puts parameters 
+# puts parameters 
+
+require "colorize"
+require "rubocop"
+require "crayon"
+require "artii"
+
+puts Crayon.bold("This will be bold")
+puts Crayon.blue("This will be blue but not bold")
+
+a = Artii::Base.new 
+puts a.asciify('GOOD   JOB!')
+
+puts String.colors

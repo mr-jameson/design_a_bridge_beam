@@ -1,7 +1,12 @@
 # Elliot Jameson CAS021906
 # Terminal Application
-# 03/09/2019 - Begin drafting code
+# Date created: 03/09/2019
 
+#------------------------------------------------------------------------------------------------------------
+#GEMS
+require "colorize"
+require "crayon"
+require "artii"
 #----------------------------------------------------------------------------------------------------------
 
 #Keep track of parameters which should be displayed to user
@@ -14,7 +19,7 @@ system("clear")
 sleep(1)
 
 #Initial greeting
-puts "Hello Mr. Engineer."
+puts Crayon.bold_green("Hello Mr. Engineer.")
 
 #Add delay for better UI
 sleep(2)
@@ -22,13 +27,13 @@ sleep(2)
 #----------------------------------------------------------------------------------------------------------
 
 #Get span input from user
-puts "\nWhat is the span of your bridge in meters?"
+puts "\nWhat is the " + Crayon.underline("span") + " of your bridge in meters?"
 
 def get_span(parameters)
     span = gets.chomp.to_f
         #Make sure user enters a float or an integer, not a string or an array
         while span == 0
-            puts "Please input an integer or a float."
+            puts "Please input an integer or a float.".colorize(:light_red)
             span = gets.chomp.to_f
         end 
 
@@ -56,7 +61,7 @@ puts parameters
 #Add delay for better UI
 sleep(1)
 
-puts "\nWhat kind of load will the bridge carry?"
+puts "\nWhat kind of " + Crayon.underline("load") + " will the bridge carry?"
 
 def get_load_type(parameters)
     load_type = ["pedestrian", "road", "rail"]
@@ -67,7 +72,7 @@ def get_load_type(parameters)
     loading = loading.downcase
 
     until load_type.include? loading
-        puts "Please enter a load type from the list above."
+        puts "Please enter a load type from the list above.".colorize(:light_red)
         loading = gets.chomp
         loading = loading.downcase
     end 
@@ -122,7 +127,7 @@ puts parameters
 #Add delay for better UI
 sleep(1)
 
-puts "\nChoose a beam size for your bridge:"
+puts "\nChoose a " + Crayon.underline("beam size") + " for your bridge:"
 
 #--------------------------------------------------------------------------------------------------
 # Define a method to get the user to input the beam size.
@@ -133,7 +138,7 @@ def get_beam_size(beam_keys, parameters)
     beam_size = gets.chomp.to_sym
 #Make sure user enters a value from the beam array
     until beam_keys.include? beam_size
-        puts "Please enter a beam specification from the list above."
+        puts "Please enter a beam specification from the list above.".colorize(:light_red)
         beam_size = gets.chomp.to_sym
     end 
 
@@ -156,13 +161,13 @@ system("clear")
 #-----------------------------------------------------------------------------------------------
 puts parameters
 
-puts "\nInclude self-weight of beam in calculation? Yes or No."
+puts "\nInclude " + Crayon.underline("self-weight") + " of beam in calculation? Yes or No."
 inc_self_weight = gets.chomp
 
 #Make sure user enters a yes or no value
 inc_self_weight = inc_self_weight.downcase
 until inc_self_weight == "yes" or inc_self_weight == "no"
-    puts "Please answer yes or no."
+    puts "Please answer yes or no.".colorize(:light_red)
     inc_self_weight = gets.chomp
     inc_self_weight = inc_self_weight.downcase
 end 
@@ -197,12 +202,16 @@ yield_str = 300
 
 def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, loading)
     if bending_capacity(yield_str, beam_size, beam) > bending_action(dist_load, span)
-        puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load."
+        puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+        #Add delay for better UI
+        sleep(1)
+        a = Artii::Base.new 
+         puts a.asciify('GOOD   JOB!')
     else
         while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
             system("clear")
             puts parameters
-            puts "\nThe #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?"
+            puts "\nThe #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?".colorize(:light_red)
             puts "\n 1. Update the beam size
             \n 2. Update the span
             \n 3. Update the load \n"
@@ -210,24 +219,24 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             if rev_input_1 == 1
                 system("clear")
                 puts parameters
-                puts "\nWhat size beam do you want to update to?"
+                puts "\nWhat size " + Crayon.underline("beam") + " do you want to update to?"
                 beam_size = get_beam_size(beam_keys, parameters)
 
             elsif rev_input_1 == 2
                 system("clear")
                 puts parameters
-                puts "\nWhat do you want to update the span to?"
+                puts "\nWhat do you want to update the " + Crayon.underline("span") + " to?"
                 span = get_span(parameters)
             
             elsif rev_input_1 == 3
                 system("clear")
                 puts parameters
-                puts "\nWhat do you want to update the span to?"
+                puts "\nWhat do you want to update the " + Crayon.underline("load type") + " to?"
                 dist_load = get_load_type(parameters)
             break
             else
                 until rev_input_1 == 1 or rev_input_1 == 2 or rev_input_1 == 3
-                puts "Please enter a number from the listed options above."
+                puts "Please enter a number from the listed options above.".colorize(:light_red)
                 rev_input_1 = gets.chomp.to_i
                 end
             end
@@ -238,7 +247,12 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
          #Add delay for better UI
          sleep(1)
 
-         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load."
+         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+
+         sleep(1)
+
+         a = Artii::Base.new 
+         puts a.asciify('GOOD   JOB!')
     end
 end
 
