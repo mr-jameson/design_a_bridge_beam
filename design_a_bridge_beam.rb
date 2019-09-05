@@ -242,11 +242,11 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
         else
             puts "No problem. Here is a summary of your bridge design:\n\n"
             puts parameters
-            puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
-            sleep(1)
-            a = Artii::Base.new 
-            puts a.asciify('GOOD   JOB!')
-            exit
+            # puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+            # sleep(1)
+            # a = Artii::Base.new 
+            # puts a.asciify('GOOD   JOB!')
+            # exit
         end
     end
         while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
@@ -314,13 +314,17 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             else
                 puts "No problem. Here is a summary of your bridge design:\n\n"
                 puts parameters
-                puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
-                sleep(1)
-                a = Artii::Base.new 
-                puts a.asciify('GOOD   JOB!')
+                # puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+                # sleep(1)
+                # a = Artii::Base.new 
+                # puts a.asciify('GOOD   JOB!')
                 break
             end
         end
+            puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+             sleep (1)
+             a = Artii::Base.new 
+            puts a.asciify('GOOD   JOB!')
 end
 
 puts bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, dist_load)
