@@ -283,5 +283,3 @@
 
 argv_copy = ARGV.map{|i| i}
 ARGV.clear
-p argv_copy
-name = gets.chomp
