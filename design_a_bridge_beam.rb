@@ -7,7 +7,13 @@
 require "colorize"
 require "crayon"
 require "artii"
+
 #----------------------------------------------------------------------------------------------------------
+#Implement help file
+argv_copy = ARGV.map{|i| i}
+ARGV.clear
+
+#------------------------------------------------------------------------------------------------------------
 
 #Keep track of parameters which should be displayed to user
 parameters = []
@@ -64,7 +70,7 @@ sleep(1)
 puts "\nWhat kind of " + Crayon.underline("load") + " will the bridge carry?"
 
 def get_load_type(parameters)
-    load_type = ["pedestrian", "road", "rail"]
+    load_type = ["pedestrian", "road traffic", "rail"]
         puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
 
     loading = gets.chomp
@@ -87,7 +93,7 @@ def get_load_type(parameters)
     # Assign distributed load value in kN/m to load type
     if loading == "pedestrian"
         dist_load = 5
-    elsif loading == "road"
+    elsif loading == "road traffic"
         dist_load = 20
     else loading == "rail"
         dist_load = 25
@@ -215,6 +221,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             puts "\n 1. Update the beam size
             \n 2. Update the span
             \n 3. Update the load \n"
+            "\nEnter a number from the options above."
             rev_input_1 = gets.chomp.to_i
             if rev_input_1 == 1
                 system("clear")
@@ -253,6 +260,39 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
 
          a = Artii::Base.new 
          puts a.asciify('GOOD   JOB!')
+
+        sleep (1)
+
+         puts "Do you want to try a lighter beam? Yes or no."
+         optimise = gets.chomp
+
+         #Make sure user enters a yes or no value
+         optimise = optimise.downcase
+        until optimise == "yes" or optimise == "no"
+            puts "Please answer yes or no.".colorize(:light_red)
+            optimise = gets.chomp
+            optimise = optimise.downcase
+        end 
+        #Add delay for better UI
+        sleep(1)
+
+        #Clear screen
+        system("clear")
+
+        if optimise == "yes"
+            puts "\nChoose a new " + Crayon.underline("beam size") + " for your bridge:"
+            beam_size = get_beam_size(beam_keys, parameters)
+
+            system("clear")
+            sleep(1)
+
+            puts parameters
+            
+        else
+            puts "No problem. Here is a summary of your bridge design:\n\n"
+            puts parameters
+            puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+        end
     end
 end
 

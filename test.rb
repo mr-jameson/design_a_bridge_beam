@@ -268,15 +268,20 @@
 
 # puts parameters 
 
-require "colorize"
-require "rubocop"
-require "crayon"
-require "artii"
+# require "colorize"
+# require "rubocop"
+# require "crayon"
+# require "artii"
 
-puts Crayon.bold("This will be bold")
-puts Crayon.blue("This will be blue but not bold")
+# puts Crayon.bold("This will be bold")
+# puts Crayon.blue("This will be blue but not bold")
 
-a = Artii::Base.new 
-puts a.asciify('GOOD   JOB!')
+# a = Artii::Base.new 
+# puts a.asciify('GOOD   JOB!')
 
-puts String.colors
+# puts String.colors
+
+argv_copy = ARGV.map{|i| i}
+ARGV.clear
+p argv_copy
+name = gets.chomp
