@@ -8,6 +8,10 @@ require "colorize"
 require "crayon"
 require "artii"
 
+#-----------------------------------------------------------------------------------------------------------
+#Referenced files
+require_relative "./methods"
+
 #----------------------------------------------------------------------------------------------------------
 #Implement help file
 argv_copy = ARGV.map{|i| i}
@@ -240,13 +244,9 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
 
             puts parameters
         else
-            puts "No problem. Here is a summary of your bridge design:\n\n"
+            puts "Here is a summary of your bridge design:\n\n"
             puts parameters
-            # puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
-            # sleep(1)
-            # a = Artii::Base.new 
-            # puts a.asciify('GOOD   JOB!')
-            # exit
+            exit
         end
     end
         while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
@@ -266,7 +266,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             elsif rev_input_1 == 2
                 system("clear")
                 puts parameters
-                puts "\nWhat do you want to update the " + Crayon.underline("span") + " to?"
+                puts "\nWhat do you want to update the " + Crayon.underline("span") + " to? (in meters)"
                 span = get_span(parameters)
             elsif rev_input_1 == 3
                 system("clear")
@@ -312,7 +312,7 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
     
                 puts parameters
             else
-                puts "No problem. Here is a summary of your bridge design:\n\n"
+                puts "Here is a summary of your bridge design:\n\n"
                 puts parameters
                 # puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
                 # sleep(1)

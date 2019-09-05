@@ -1,5 +1,8 @@
 ***Design A Bridge Beam***
 
+GITHUB link
+https://github.com/mr-jameson/design_a_bridge_beam
+
 ## Statement of Purpose and Scope
 
 This terminal application calculates the adequacy of a structural bridge beam. It takes user inputs for span length, load type and beam size. It returns an assessment of whether or not the beam is adequate. If the beam is not adequate, the user is presented with options to change the span, beam size or loading.
@@ -14,9 +17,11 @@ The application works by comparing the bending capacity of a selected beam to th
 
 #### Include self-weight?
 
-The self weight feature asks the user whether or not they would like to include the self-weight of the beam in the capacity assessment. If yes, the self-weight of the beam is 
+The self weight feature asks the user whether or not they would like to include the self-weight of the beam in the capacity assessment. If yes, the self-weight of the beam is added to the loading applied to the beam.
 
-- Include deflection calc?
+#### Update parameters
+
+When the beam is calculated to be inadequate, the user is prompted to update the beam-size, span length or load-type. This feature loops until the user has input a combination of parameters which work.
 
 #### Check Deadweight
 
