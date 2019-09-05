@@ -70,7 +70,7 @@ sleep(1)
 puts "\nWhat kind of " + Crayon.underline("load") + " will the bridge carry?"
 
 def get_load_type(parameters)
-    load_type = ["pedestrian", "road traffic", "rail"]
+    load_type = ["pedestrian", "road", "rail"]
         puts "#{load_type[0].capitalize}, #{load_type[1]}, or #{load_type[2]}?"
 
     loading = gets.chomp
@@ -93,7 +93,7 @@ def get_load_type(parameters)
     # Assign distributed load value in kN/m to load type
     if loading == "pedestrian"
         dist_load = 5
-    elsif loading == "road traffic"
+    elsif loading == "road"
         dist_load = 20
     else loading == "rail"
         dist_load = 25
@@ -287,7 +287,48 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
             sleep(1)
 
             puts parameters
-            
+            if bending_capacity(yield_str, beam_size, beam) > bending_action(dist_load, span)
+                puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+                #Add delay for better UI
+                sleep(1)
+                a = Artii::Base.new 
+                 puts a.asciify('GOOD   JOB!')
+            else
+                while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
+                    system("clear")
+                    puts parameters
+                    puts "\nThe #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?".colorize(:light_red)
+                    puts "\n 1. Update the beam size
+                    \n 2. Update the span
+                    \n 3. Update the load \n"
+                    "\nEnter a number from the options above."
+                    rev_input_1 = gets.chomp.to_i
+                    if rev_input_1 == 1
+                        system("clear")
+                        puts parameters
+                        puts "\nWhat size " + Crayon.underline("beam") + " do you want to update to?"
+                        beam_size = get_beam_size(beam_keys, parameters)
+        
+                    elsif rev_input_1 == 2
+                        system("clear")
+                        puts parameters
+                        puts "\nWhat do you want to update the " + Crayon.underline("span") + " to?"
+                        span = get_span(parameters)
+                    
+                    elsif rev_input_1 == 3
+                        system("clear")
+                        puts parameters
+                        puts "\nWhat do you want to update the " + Crayon.underline("load type") + " to?"
+                        dist_load = get_load_type(parameters)
+                    break
+                    else
+                        until rev_input_1 == 1 or rev_input_1 == 2 or rev_input_1 == 3
+                        puts "Please enter a number from the listed options above.".colorize(:light_red)
+                        rev_input_1 = gets.chomp.to_i
+                        end
+                    end
+                 end
+                end
         else
             puts "No problem. Here is a summary of your bridge design:\n\n"
             puts parameters
