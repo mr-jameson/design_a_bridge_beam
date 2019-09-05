@@ -207,13 +207,45 @@ yield_str = 300
 # modulus = beam[beam_size][1]
 
 def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, loading)
-    if bending_capacity(yield_str, beam_size, beam) > bending_action(dist_load, span)
+    while bending_capacity(yield_str, beam_size, beam) > bending_action(dist_load, span)
         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
         #Add delay for better UI
         sleep(1)
         a = Artii::Base.new 
          puts a.asciify('GOOD   JOB!')
-    else
+         sleep (1)
+
+         puts "Do you want to try a lighter beam? Yes or no."
+         optimise = gets.chomp
+
+         #Make sure user enters a yes or no value
+         optimise = optimise.downcase
+        until optimise == "yes" or optimise == "no"
+            puts "Please answer yes or no.".colorize(:light_red)
+            optimise = gets.chomp
+            optimise = optimise.downcase
+        end 
+        #Add delay for better UI
+        sleep(1)
+
+        #Clear screen
+        system("clear")
+
+        if optimise == "yes"
+            puts "\nChoose a new " + Crayon.underline("beam size") + " for your bridge:"
+            beam_size = get_beam_size(beam_keys, parameters)
+
+            system("clear")
+            sleep(1)
+
+            puts parameters
+        else
+            puts "No problem. Here is a summary of your bridge design:\n\n"
+            puts parameters
+            puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
+            break
+        end
+    end
         while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
             system("clear")
             puts parameters
@@ -248,93 +280,6 @@ def bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parame
                 end
             end
          end
-         system("clear")
-         puts parameters
-
-         #Add delay for better UI
-         sleep(1)
-
-         puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
-
-         sleep(1)
-
-         a = Artii::Base.new 
-         puts a.asciify('GOOD   JOB!')
-
-        sleep (1)
-
-         puts "Do you want to try a lighter beam? Yes or no."
-         optimise = gets.chomp
-
-         #Make sure user enters a yes or no value
-         optimise = optimise.downcase
-        until optimise == "yes" or optimise == "no"
-            puts "Please answer yes or no.".colorize(:light_red)
-            optimise = gets.chomp
-            optimise = optimise.downcase
-        end 
-        #Add delay for better UI
-        sleep(1)
-
-        #Clear screen
-        system("clear")
-
-        if optimise == "yes"
-            puts "\nChoose a new " + Crayon.underline("beam size") + " for your bridge:"
-            beam_size = get_beam_size(beam_keys, parameters)
-
-            system("clear")
-            sleep(1)
-
-            puts parameters
-            if bending_capacity(yield_str, beam_size, beam) > bending_action(dist_load, span)
-                puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
-                #Add delay for better UI
-                sleep(1)
-                a = Artii::Base.new 
-                 puts a.asciify('GOOD   JOB!')
-            else
-                while bending_capacity(yield_str, beam_size, beam) <= bending_action(dist_load, span)
-                    system("clear")
-                    puts parameters
-                    puts "\nThe #{beam_size} beam is not strong enough given the span and load. Please select a larger beam, reduce your span, or reduce your load. \nWhat would you like to do?".colorize(:light_red)
-                    puts "\n 1. Update the beam size
-                    \n 2. Update the span
-                    \n 3. Update the load \n"
-                    "\nEnter a number from the options above."
-                    rev_input_1 = gets.chomp.to_i
-                    if rev_input_1 == 1
-                        system("clear")
-                        puts parameters
-                        puts "\nWhat size " + Crayon.underline("beam") + " do you want to update to?"
-                        beam_size = get_beam_size(beam_keys, parameters)
-        
-                    elsif rev_input_1 == 2
-                        system("clear")
-                        puts parameters
-                        puts "\nWhat do you want to update the " + Crayon.underline("span") + " to?"
-                        span = get_span(parameters)
-                    
-                    elsif rev_input_1 == 3
-                        system("clear")
-                        puts parameters
-                        puts "\nWhat do you want to update the " + Crayon.underline("load type") + " to?"
-                        dist_load = get_load_type(parameters)
-                    break
-                    else
-                        until rev_input_1 == 1 or rev_input_1 == 2 or rev_input_1 == 3
-                        puts "Please enter a number from the listed options above.".colorize(:light_red)
-                        rev_input_1 = gets.chomp.to_i
-                        end
-                    end
-                 end
-                end
-        else
-            puts "No problem. Here is a summary of your bridge design:\n\n"
-            puts parameters
-            puts "\nThe #{beam_size} beam is adequate. A #{span} m span bridge can safely carry the specified load.".colorize(:light_green)
-        end
-    end
 end
 
 puts bending_check(beam, beam_size, yield_str, dist_load, span, beam_keys, parameters, dist_load)
