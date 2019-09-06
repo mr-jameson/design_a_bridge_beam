@@ -13,7 +13,7 @@ The application works by comparing the bending capacity of a selected beam to th
 
 ## Help
 
-To run the application, change into the ./terminal_application direction.
+To run the application, change into the ./terminal_application directory.
 Execute the program by typing ruby design_a_bridge_beam.rb into the terminal.
 To exit the program prematurely, type ^C.
 
@@ -23,7 +23,7 @@ To exit the program prematurely, type ^C.
 
 #### Include self-weight?
 
-The self weight feature asks the user whether or not they would like to include the self-weight of the beam in the capacity assessment. If yes, the self-weight of the beam is added to the loading applied to the beam.
+The self weight feature asks the user whether or not they would like to include the self-weight of the beam in the capacity assessment. If yes, the self-weight of the beam is added to the loading applied to the beam. The user can only enter a yes or no answer.
 
 #### Update parameters when beam size inadequate
 
@@ -34,7 +34,7 @@ When the beam is calculated to be inadequate, the user is prompted to update the
 When the initial beam size is calculated to be adequate, the user is asked whether they want to reduce the beam size. This function enables the structural engineer to design a more efficient beam. The loop is exited when the user inputs 'no' after being prompted to reduce the beam size.
 
 ### Implementation plan
-Refer to link below for implementation plan spreadsheet
+Refer to link below for implementation plan spreadsheet.
 https://docs.google.com/spreadsheets/d/1x8fl3CgVF5COaa2hRNPkyNvbJ_zVb0FZ2z-Vz6xG7Vo/edit?usp=sharing
 
 ### Testing Procedure
@@ -62,6 +62,7 @@ The user will be prompted to input the following variables:
 2. Enter load type
 3. Select beam size
 
-Each time the user is prompted for an input, a conditional statement and loop is setup to ensure the user enters an acceptable value.
-If the combination of inputs results in the beam being inadequate, the user is prompted to adjust the inputs until an adequate solution is reached.
+Each time the user is prompted for an input, a conditional statement and loop is setup to ensure the user enters an acceptable value. This prevents the program from returning an error.
+
+If the combination of inputs results in the beam being inadequate, the user is prompted to adjust the inputs until an adequate solution is reached. Once the user has the smallest beam possible for the given span and load, the user can exit the program by selecting 'no' when prompted to reduce beam size.
 

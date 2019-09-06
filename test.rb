@@ -281,9 +281,20 @@
 
 # puts String.colors
 
-argv_copy = ARGV.map{|i| i}
-ARGV.clear
+# test_array = ARGV
 
-if argv_copy[0] == "-h" or argv_copy == "help"
-puts "Help"
-end
+# argv_copy = ARGV.map{|i| i}
+# ARGV.clear
+
+# if argv_copy[0] == "-h" or argv_copy[0] == "help"
+# puts "Help"
+# end
+
+# p argv_copy
+
+# argv_copy = ARGV
+
+# if argv_copy[0] == "-h" or argv_copy[0] == "Help"
+# # File.open("README.md")
+# puts ""
+# end

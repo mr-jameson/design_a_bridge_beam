@@ -17,18 +17,21 @@ require_relative "./methods"
 argv_copy = ARGV.map{|i| i}
 ARGV.clear
 
-if argv_copy == "-h" or argv_copy == "help"
+if argv_copy.include? "help" or argv_copy.include? "-h"
+puts "\nThis terminal application calculates the adequacy of a structural bridge beam. It takes user inputs for span length, load type and beam size. It returns an assessment of whether or not the beam is adequate. If the beam is not adequate, the user is presented with options to change the span, beam size or loading.\n
+To run the application, change into the ./terminal_application directory.\n
+Execute the program by typing ruby design_a_bridge_beam.rb into the terminal.\n
+To exit the program prematurely, type ^C.\n\n"
+exit
+end
     
-
 #------------------------------------------------------------------------------------------------------------
 
 #Keep track of parameters which should be displayed to user
 parameters = []
 
-#clear screen
+#clear screen with delay for improved UX
 system("clear")
-
-#Add delay for better UI
 sleep(1)
 
 #Initial greeting
@@ -44,10 +47,9 @@ puts "\nWhat is the " + Crayon.underline("span") + " of your bridge in meters?"
 
 #method - refer to methods.rb
 span = get_span(parameters)
-#Add delay for better UI
-sleep(1)
 
-#clear screen
+#clear screen with delay for improved UX
+sleep(1)
 system("clear")
 
 #----------------------------------------------------------------------------------------------------------
@@ -62,10 +64,8 @@ puts "\nWhat kind of " + Crayon.underline("load") + " will the bridge carry?"
 #method - refer to methods.rb
 dist_load = get_load_type(parameters)
 
-# #Add delay for better UI
+#clear screen with delay for improved UX
 sleep(1)
-
-# #clear screen
 system("clear")
 
 #-----------------------------------------------------------------------------------------------------------
@@ -92,10 +92,8 @@ puts "\nChoose a " + Crayon.underline("beam size") + " for your bridge:"
 #method - refer to methods.rb
 beam_size = get_beam_size(beam_keys, parameters)
 
-#Add delay for better UI
+#clear screen with delay for improved UX
 sleep(1)
-
-#clear screen
 system("clear")
 
 #-----------------------------------------------------------------------------------------------
@@ -112,10 +110,8 @@ until inc_self_weight == "yes" or inc_self_weight == "no"
     inc_self_weight = inc_self_weight.downcase
 end 
 
-#Add delay for better UI
+#clear screen with delay for improved UX
 sleep(1)
-
-#Clear screen
 system("clear")
 
 parameters.push "inc_self_weight = #{inc_self_weight}"

@@ -10,7 +10,6 @@ def get_span(parameters)
             puts "Please input an integer or a float.".colorize(:light_red)
             span = gets.chomp.to_f
         end 
-
         if parameters.to_s.include? "span"
             parameters.delete_at(0)
             parameters.unshift "span = #{span} m"
@@ -36,7 +35,6 @@ def get_load_type(parameters)
         loading = gets.chomp
         loading = loading.downcase
     end 
-
     if parameters.to_s.include? "load_type"
         parameters.delete_at(1)
         parameters.insert(1,"load_type = #{loading}")
