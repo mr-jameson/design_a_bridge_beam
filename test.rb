@@ -283,3 +283,7 @@
 
 argv_copy = ARGV.map{|i| i}
 ARGV.clear
+
+if argv_copy[0] == "-h" or argv_copy == "help"
+puts "Help"
+end

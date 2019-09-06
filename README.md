@@ -1,4 +1,4 @@
-***Design A Bridge Beam***
+# Design A Bridge Beam
 
 GITHUB link
 https://github.com/mr-jameson/design_a_bridge_beam
@@ -27,11 +27,11 @@ The self weight feature asks the user whether or not they would like to include 
 
 #### Update parameters when beam size inadequate
 
-When the beam is calculated to be inadequate, the user is prompted to update the beam-size, span length or load-type. This feature loops until the user has input a combination of parameters which work.
+When the beam is calculated to be inadequate, the user is prompted to update the beam-size, span length or load-type. This feature loops until the user has input a combination of parameters which allow the bending capacity to exceed the bendng action. Once this is achieved, the loop will break and the user will be taken to the optimisation loop.
 
 #### Optimise beam size when adequate
 
-When the initial beam size is calculated to be adequate, the user is asked whether they want to reduce the beam size. This function enables the structural engineer to design a more efficient beam.
+When the initial beam size is calculated to be adequate, the user is asked whether they want to reduce the beam size. This function enables the structural engineer to design a more efficient beam. The loop is exited when the user inputs 'no' after being prompted to reduce the beam size.
 
 ### Implementation plan
 Refer to link below for implementation plan spreadsheet
@@ -39,7 +39,7 @@ https://docs.google.com/spreadsheets/d/1x8fl3CgVF5COaa2hRNPkyNvbJ_zVb0FZ2z-Vz6xG
 
 ### Testing Procedure
 The application has been tested for beam configurations which are not adequate for the load and span, as well as for parameter configurations which are overdesigned and could be optimised by utilising a lighter beam. 
-Refer to link below for testing log
+Refer to link below for testing log.
 https://docs.google.com/spreadsheets/d/1q5jJ8jzO18O9azdHuJfD2PJaRS9XPx6oABJJf_b06-s/edit?usp=sharing
 
 ### Development Log

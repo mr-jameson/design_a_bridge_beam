@@ -17,9 +17,6 @@ require_relative "./methods"
 argv_copy = ARGV.map{|i| i}
 ARGV.clear
 
-if argv_copy == "-h" or argv_copy == "help"
-    
-
 #------------------------------------------------------------------------------------------------------------
 
 #Keep track of parameters which should be displayed to user
